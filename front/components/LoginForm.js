@@ -1,21 +1,35 @@
 import React, { useState, useCallback } from "react";
 import { Form, Input, Button } from "antd";
 import Link from "next/link";
+import styled from "styled-components";
 
-const LoginForm = () => {
+const ButtonWrapper = styled.div`
+  margin-top: 10px;
+`;
+
+const FormWrapper = styled(Form)`
+  padding: 10px;
+`;
+
+const LoginForm = ({ setIsLoggedIn }) => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
 
-  const onChangeId = useCallback(() => {
+  const onChangeId = useCallback((e) => {
     setId(e.target.value);
   }, []);
 
-  const onChangePassword = useCallback(() => {
+  const onChangePassword = useCallback((e) => {
     setPassonChangePassword(e.target.value);
   }, []);
 
+  const onsubmitForm = useCallback(() => {
+    console.log(id, password);
+    setIsLoggedIn(true);
+  }, [id, password]);
+
   return (
-    <Form>
+    <FormWrapper onFinish={onsubmitForm}>
       <div>
         <label html="user-id">아이디</label>
         <br />
@@ -34,7 +48,7 @@ const LoginForm = () => {
         />
       </div>
 
-      <div>
+      <ButtonWrapper>
         <Button type="primary" htmlType="submit" loading={false}>
           로그인
         </Button>
@@ -43,8 +57,8 @@ const LoginForm = () => {
             <Button>회원가입</Button>
           </a>
         </Link>
-      </div>
-    </Form>
+      </ButtonWrapper>
+    </FormWrapper>
   );
 };
 
