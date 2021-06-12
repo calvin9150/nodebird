@@ -20,7 +20,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
   }, []);
 
   const onChangePassword = useCallback((e) => {
-    setPassonChangePassword(e.target.value);
+    setPassword(e.target.value);
   }, []);
 
   const onsubmitForm = useCallback(() => {
