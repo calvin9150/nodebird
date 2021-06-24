@@ -4,12 +4,13 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import reducer from "../reducers";
 
-const configureStore = () => {
+const configureStore = (context) => {
+  console.log(context);
   const middlewares = [];
   const enhancer =
     process.env.NODE_ENV === "production"
       ? compose(applyMiddleware(...middlewares))
-      : composeWithDevTools(applyMiddleware(...middlewares)) //prettier-ignore
+      : composeWithDevTools(applyMiddleware(...middlewares));
   const store = createStore(reducer, enhancer);
   return store;
 };
