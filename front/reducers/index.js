@@ -22,7 +22,6 @@ export const loginAction = (data) => {
 export const logoutAction = (data) => {
   return {
     type: "LOG_OUT",
-    data,
   };
 };
 
