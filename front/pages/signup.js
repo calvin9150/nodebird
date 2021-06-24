@@ -11,6 +11,8 @@ const ErrorMessage = styled.div`
 
 const Signup = () => {
   const [id, onChangeId] = useInput("");
+  const [nickname, onChangeNickname] = useInput("");
+
   const [password, onChangePassword] = useInput("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [passwordError, setPasswordError] = useState(false);
@@ -22,10 +24,7 @@ const Signup = () => {
     },
     [password]
   );
-  const [nickname, setNickname] = useState("");
-  const onChangeNickname = useCallback((e) => {
-    setNickname(e.target.value);
-  }, []);
+
   const [term, setTerm] = useState("");
   const [termError, setTermError] = useState(false);
   const onChangeTerm = useCallback((e) => {
