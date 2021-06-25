@@ -20,7 +20,13 @@ export const initialState = {
           User: {
             nickname: "gomdang",
           },
-          contents: "곰댕이다 반갑다",
+          content: "곰댕이다 반갑다",
+        },
+        {
+          User: {
+            nickname: "sarigom",
+          },
+          content: "사리곰탕면이다",
         },
       ],
     },
