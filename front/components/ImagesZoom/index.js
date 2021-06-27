@@ -1,31 +1,31 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Slick from "react-slick";
-
 import {
   Overlay,
-  Global,
   Header,
   CloseBtn,
+  SlickWrapper,
   ImgWrapper,
   Indicator,
-  SlickWrapper,
+  Global,
 } from "./styles";
 
 const ImagesZoom = ({ images, onClose }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+
   return (
     <Overlay>
       <Global />
       <Header>
         <h1>상세 이미지</h1>
-        <CloseBtn onClick={onClose}>X</CloseBtn>
+        <CloseBtn onClick={onClose} />
       </Header>
       <SlickWrapper>
         <div>
           <Slick
             initialSlide={0}
-            afterChange={(slide) => setCurrentSlide(slide)}
+            beforeChange={(slide, newSlide) => setCurrentSlide(newSlide)}
             infinite
             arrows={false}
             slidesToShow={1}
@@ -49,7 +49,11 @@ const ImagesZoom = ({ images, onClose }) => {
 };
 
 ImagesZoom.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.object).isRequired,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      src: PropTypes.string,
+    })
+  ).isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
