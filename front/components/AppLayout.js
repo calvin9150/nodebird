@@ -1,22 +1,16 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Link from "next/link";
-import { Menu, Input, Row, Col } from "antd";
-import styled from "styled-components";
-import UserProfile from "./UserProfile";
-import LoginForm from "./LoginForm";
+import PropTypes from "prop-types";
+import { Col, Input, Menu, Row } from "antd";
 import { useSelector } from "react-redux";
 
-const SearchInput = styled(Input.Search)`
-  vertical-align: middle;
-`;
+import LoginForm from "./LoginForm";
+import UserProfile from "./UserProfile";
 
 const AppLayout = ({ children }) => {
-  const { me } = useSelector((state) => state.user.isLoggedIn);
-  console.log("로그인:" + isLoggedIn);
-
+  const { me } = useSelector((state) => state.user);
   return (
-    <div className="">
+    <div>
       <Menu mode="horizontal">
         <Menu.Item key="home">
           <Link href="/">
@@ -29,15 +23,10 @@ const AppLayout = ({ children }) => {
           </Link>
         </Menu.Item>
         <Menu.Item key="mail">
-          <SearchInput enterButton style={{ verticalAlign: "middle" }} />
-        </Menu.Item>
-        <Menu.Item key="signup">
-          <Link href="/signup">
-            <a>회원가입</a>
-          </Link>
+          <Input.Search enterButton style={{ verticalAlign: "middle" }} />
         </Menu.Item>
       </Menu>
-      <Row>
+      <Row gutter={8}>
         <Col xs={24} md={6}>
           {me ? <UserProfile /> : <LoginForm />}
         </Col>
@@ -50,7 +39,7 @@ const AppLayout = ({ children }) => {
             target="_blank"
             rel="noreferrer noopener"
           >
-            이동
+            gom
           </a>
         </Col>
       </Row>
@@ -58,7 +47,7 @@ const AppLayout = ({ children }) => {
   );
 };
 
-AppLayout.proptypes = {
+AppLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
