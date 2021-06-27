@@ -23,6 +23,20 @@ module.exports = (sequelize, DataTypes) => {
       collate: "utf8_general_ci",
     }
   );
-  User.associate = (db) => {};
+  User.associate = (db) => {
+    db.Users.hasMany(db.Post);
+    db.Users.hasMany(db.Comment);
+    db.User.belongsToMany(db.post, { through: "Like", as: "Liked" });
+    db.User.belongsToMany(db.User, {
+      through: "Follow",
+      as: "Followers",
+      foreignKey: "FollowingId",
+    });
+    db.User.belongsToMany(db.User, {
+      through: "Follow",
+      as: "Followings",
+      foreignKey: "FollowerId",
+    });
+  };
   return User;
 };
