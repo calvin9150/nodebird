@@ -1,8 +1,14 @@
 const express = require("express");
 const postRouter = require("./routes/post");
-
+const db = require("./models");
 const app = express();
 
+db.sequelize
+  .sync()
+  .then(() => {
+    console.log("db 연결 성공");
+  })
+  .catch(console.error);
 // const http = require("http");
 // const server = http.createServer((req, res) => {
 //   console.log(req.url, req.method);
