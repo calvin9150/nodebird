@@ -9,15 +9,31 @@ import AppLayout from "../components/AppLayout";
 import useInput from "../hooks/useInput";
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const { signUpLoading, signUpDone, signUpError } = useSelector(
+    (state) => state.user
+  );
+
+  useEffect(() => {
+    console.log("메인으로 돌아가");
+    if (signUpDone) {
+      Router.push("/");
+    }
+  }, [signUpDone]);
+
+  useEffect(() => {
+    if (signUpError) {
+      alert(signUpError);
+    }
+  }, [signUpError]);
+
   const [passwordCheck, setPasswordCheck] = useState("");
   const [term, setTerm] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [termError, setTermError] = useState(false);
-
   const [email, onChangeEmail] = useInput("");
-  const [nick, onChangeNick] = useInput("");
+  const [nickname, onChangeNickname] = useInput("");
   const [password, onChangePassword] = useInput("");
-  const dispatch = useDispatch();
   const { isSigningUp, me } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -39,7 +55,7 @@ const Signup = () => {
       data: {
         email,
         password,
-        nick,
+        nickname,
       },
     });
   }, [email, password, passwordCheck, term]);
@@ -64,13 +80,14 @@ const Signup = () => {
       </Head>
       <Form onFinish={onSubmit} style={{ padding: 10 }}>
         <div>
-          <label htmlFor="user-email">아이디</label>
+          <label htmlFor="user-email">이메일</label>
           <br />
           <Input
             name="user-email"
             value={email}
             required
             onChange={onChangeEmail}
+            type="email"
           />
         </div>
         <div>
@@ -78,9 +95,9 @@ const Signup = () => {
           <br />
           <Input
             name="user-nick"
-            value={nick}
+            value={nickname}
             required
-            onChange={onChangeNick}
+            onChange={onChangeNickname}
           />
         </div>
         <div>
