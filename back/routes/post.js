@@ -4,7 +4,7 @@ const { isLoggedIn } = require("./middlewares");
 
 const router = express.Router();
 
-router.post("/", isLoggedIn, async (req, res) => {
+router.post("/", isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.create({
       content: req.body.content,
@@ -24,7 +24,7 @@ router.post("/", isLoggedIn, async (req, res) => {
         },
       ],
     });
-    res.status(201).json(post);
+    res.status(201).json(fullPost);
   } catch (err) {
     console.log(err);
     next(err);
