@@ -19,7 +19,29 @@ router.post("/login", (req, res, next) => {
         console.log(loginErr);
         return next(loginErr);
       }
-      return res.status(200).json(user);
+      const fullUserWithoutPassword = await User.findOne({
+        where: { id: user.id },
+        attributes: {
+          exclude: ["password"],
+        },
+        include: [
+          {
+            model: Post,
+            attributes: ["id"],
+          },
+          {
+            model: User,
+            as: "Followings",
+            attributes: ["id"],
+          },
+          {
+            model: User,
+            as: "Followers",
+            attributes: ["id"],
+          },
+        ],
+      });
+      return res.status(200).json(fullUserWithoutPassword);
     });
   })(req, res, next);
 });
@@ -30,6 +52,7 @@ router.post("/", async (req, res, next) => {
     const exUser = await User.findOne({
       where: {
         email: req.body.email,
+        include: [{ model }],
       },
     });
     if (exUser) {
@@ -46,6 +69,12 @@ router.post("/", async (req, res, next) => {
     console.error(error);
     next(error); // status 500
   }
+});
+
+router.post("/logout", (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.send("ok");
 });
 
 module.exports = router;
