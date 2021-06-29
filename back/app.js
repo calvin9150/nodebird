@@ -41,8 +41,8 @@ passportConfig();
 
 app.use(
   cors({
-    origin: "*",
-    credentials: false,
+    origin: "http://localhost:3000",
+    credentials: true,
   })
 );
 app.use(express.json());
@@ -72,6 +72,8 @@ app.get("/posts", (req, res) => {
 
 app.use("/post", postRouter);
 app.use("/user", userRouter);
+
+app.use((err, req, res, next) => {});
 
 app.listen(3065, () => {
   console.log("서버 실행 중");
